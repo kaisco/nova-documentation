@@ -4,6 +4,7 @@ namespace Dniccum\NovaDocumentation\Library;
 use cebe\markdown\Markdown;
 use cebe\markdown\GithubMarkdown;
 use cebe\markdown\MarkdownExtra;
+use Dniccum\NovaDocumentation\Model\Documentation;
 
 class MarkdownUtility
 {
@@ -39,12 +40,6 @@ class MarkdownUtility
         }
 
         $this->parser->html5 = true;
-
-        if (\File::exists(resource_path(config('novadocumentation.home')))) {
-            $this->home = resource_path(config('novadocumentation.home'));
-        } else {
-            $this->home = __DIR__.'/../../resources/'.config('novadocumentation.home');
-        }
     }
 
     /**
@@ -212,5 +207,37 @@ class MarkdownUtility
         $output = preg_replace("/(\.md|.text|.mdown|.mkdn|.mkd|.mdwn|mdtxt|.Rmd|.mdtext)/i",'"',$output);
 
         return $output;
+    }
+
+    /**
+     * Builds all of the Vue routes depending on the pages that are available.
+     * @return array
+     * @throws \Exception
+     */
+    public function buildPageRoutes1()
+    {
+        try {
+            $docs = Documentation::where(['on' => 1])->orderBy('order', 'ASC')->get();
+
+            foreach ($docs as $index => $item) {
+                $options[] = [
+                    'title' => config('novadocumentation.title'),
+                    'pageRoute' => $item->id,
+                    'file' => '',
+                    'home' => $index == 0 ? 1: 0,
+                    'content' => $this->parse($item->content),
+                    'pageTitle' => $item->title,
+                ];
+            }
+
+            for($i = 0; $i < count($options); $i++) {
+                $options[$i]['content'] = $this->replaceLinks($options[$i]['content'], $options);
+            }
+
+        } catch (\Exception $e) {
+            abort(500, $e);
+        }
+
+        return $options;
     }
 }

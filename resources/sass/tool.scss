@@ -35,4 +35,16 @@
     padding-left: 15px;
     border-left: 3px solid #ccc;
   }
+
+  .documentation-content table {
+    border-collapse: collapse;
+  }
+
+  .documentation-content table,tr,th,td {
+    border: 1px solid black;
+  }
+
+  .documentation-content th,td {
+     padding: 8px;
+  }
 }

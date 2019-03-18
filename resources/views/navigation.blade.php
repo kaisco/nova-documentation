@@ -27,3 +27,17 @@
         {{ config('novadocumentation.title') }}
     </span>
 </router-link>
+@can('viewAny', \Dniccum\NovaDocumentation\Model\Documentation::class)
+<ul class="list-reset mb-8">
+    <li class="leading-wide mb-4 text-sm">
+        <router-link :to="{
+            name: 'index',
+            params: {
+                resourceName: 'documentations'
+            }
+        }" class="text-white ml-8 no-underline dim">
+            文档管理
+        </router-link>
+    </li>
+</ul>
+@endcan

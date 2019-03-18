@@ -1,6 +1,6 @@
 <template>
     <card class="w-1/5 bg-white p-6 self-start" style="min-height: 300px">
-        <h3 class="mb-2">Contents</h3>
+        <h3 class="mb-2">目录</h3>
         <ul>
             <li class="mb-2" v-for="item of content">
                 <router-link :to="{name: item.name}"

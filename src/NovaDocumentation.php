@@ -2,6 +2,7 @@
 
 namespace Dniccum\NovaDocumentation;
 
+use Dniccum\NovaDocumentation\Resources\Documentation;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;
 
@@ -16,6 +17,10 @@ class NovaDocumentation extends Tool
     {
         Nova::script('nova-documentation', __DIR__.'/../dist/js/tool.js');
         Nova::style('nova-documentation', __DIR__.'/../dist/css/tool.css');
+
+        Nova::resources([
+            Documentation::class
+        ]);
     }
 
     /**

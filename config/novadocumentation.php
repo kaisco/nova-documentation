@@ -25,18 +25,4 @@ return [
     */
 
     'flavor' => 'github',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Home Page
-    |--------------------------------------------------------------------------
-    |
-    | The markdown document that will be used as the home page and/or entry
-    | point. This will be located within the documentation directory that resides
-    | within your application's resources directory.
-    |
-    */
-
-    'home' => 'documentation/home.md',
-
 ];

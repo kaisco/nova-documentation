@@ -34,7 +34,7 @@ class ToolServiceProvider extends ServiceProvider
             $this->routes();
         });
 
-        $options = $this->utility->buildPageRoutes();
+        $options = $this->utility->buildPageRoutes1();
 
         Nova::serving(function (ServingNova $event) use ($options) {
             Nova::provideToScript([
@@ -46,12 +46,8 @@ class ToolServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__.'/../config/'.$this->config.'.php' => base_path('config/'.$this->config.'.php'),
             ], 'config');
+            $this->publishes([__DIR__.'/../database/migrations/2019_03_15_183015_documentation.php' => database_path('migrations/2019_03_15_183015_documentation.php')], 'config');
         }
-
-        $this->publishes([
-            __DIR__.'/../resources/documentation/home.md' => resource_path('documentation/home.md'),
-            __DIR__.'/../resources/documentation/sample.md' => resource_path('documentation/sample.md'),
-        ]);
     }
 
     /**
