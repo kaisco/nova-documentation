@@ -216,22 +216,25 @@ class MarkdownUtility
      */
     public function buildPageRoutes1()
     {
+        $options = [];
         try {
-            $docs = Documentation::where(['on' => 1])->orderBy('order', 'ASC')->get();
+            if (!app()->runningInConsole()) { // console命令在未运行Documentation migrate生成表时，加载数据会报错
+                $docs = Documentation::where(['on' => 1])->orderBy('order', 'ASC')->get();
 
-            foreach ($docs as $index => $item) {
-                $options[] = [
-                    'title' => config('novadocumentation.title'),
-                    'pageRoute' => $item->id,
-                    'file' => '',
-                    'home' => $index == 0 ? 1: 0,
-                    'content' => $this->parse($item->content),
-                    'pageTitle' => $item->title,
-                ];
-            }
+                foreach ($docs as $index => $item) {
+                    $options[] = [
+                        'title' => config('novadocumentation.title'),
+                        'pageRoute' => $item->id,
+                        'file' => '',
+                        'home' => $index == 0 ? 1: 0,
+                        'content' => $this->parse($item->content),
+                        'pageTitle' => $item->title,
+                    ];
+                }
 
-            for($i = 0; $i < count($options); $i++) {
-                $options[$i]['content'] = $this->replaceLinks($options[$i]['content'], $options);
+                for($i = 0; $i < count($options); $i++) {
+                    $options[$i]['content'] = $this->replaceLinks($options[$i]['content'], $options);
+                }
             }
 
         } catch (\Exception $e) {
